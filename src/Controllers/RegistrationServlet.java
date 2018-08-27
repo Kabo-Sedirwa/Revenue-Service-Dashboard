@@ -6,7 +6,8 @@
  import java.io.IOException;
  import java.sql.Connection;
  import java.sql.PreparedStatement;
- import java.sql.SQLException;
+import java.sql.ResultSet;
+import java.sql.SQLException;
  import javax.servlet.RequestDispatcher;
  import javax.servlet.ServletException;
  import javax.servlet.annotation.WebServlet;
@@ -48,46 +49,75 @@ public class RegistrationServlet extends HttpServlet {
 		   rd.include(request, response);
 		  } else {
 			  
+			  
+			  String errorString = null;
+			  
 			  try {
 		            Connection conn = ManagementUtility.getStoredConnection(request);
 		            
 		            
-			        String sql = "Insert into users(firstName,lastName,email,password) values (?,?,?,?)";
+		            String checkEmailQuery = "Select Count(*) AS countRow from users " //
+			                + " where email = '"+email+"'";
+			 
+			        PreparedStatement pstm = conn.prepareStatement(checkEmailQuery);
+			        ResultSet rs = pstm.executeQuery();
+			        
+			        rs.next();
+			        String rowCount = rs.getString(1);
+			        
+			        if(rowCount.equals(0)){
+			        	
+			            String sql = "Insert into users(firstName,lastName,email,password) values (?,?,?,?)";
 
 
-				    PreparedStatement pstm = conn.prepareStatement(sql);
-				    
-			        pstm.setString(1, firstName);
-			        pstm.setString(2, lastName);
-			        pstm.setString(3, email);
-			        pstm.setString(4, password);
+					    PreparedStatement pstmRegister = conn.prepareStatement(sql);
+					    
+					    pstmRegister.setString(1, firstName);
+					    pstmRegister.setString(2, lastName);
+					    pstmRegister.setString(3, email);
+					    pstmRegister.setString(4, password);
 
-			        pstm.executeUpdate();
-				    System.out.println("successfuly inserted");
-				
+					    pstmRegister.executeUpdate();
+					    System.out.println("successfuly inserted");
+					    
+					    
+					
 
+					   
+				       User user = new User();
 				   
-			       User user = new User();
-			   
-			       user.setFirstName(firstName);
-			       user.setLastName(lastName);
-				   
-				   HttpSession session = request.getSession();
-				   ManagementUtility.storeRegisteredUser(session, user);
-		 
-		            // If user checked "Remember me".
-		            if (remember) {
-		            	ManagementUtility.storeUserCookie(response, user);
-		            }
-		            // Else delete cookie.
-		            else {
-		            	ManagementUtility.deleteUserCookie(response);
-		            }
-		 
-		            // Redirect to userInfo page.
-		            response.sendRedirect(request.getContextPath() + "/Dashboard");
-		            
-				  
+				       user.setFirstName(firstName);
+				       user.setLastName(lastName);
+					   
+					   HttpSession session = request.getSession();
+					   ManagementUtility.storeRegisteredUser(session, user);
+			 
+			            // If user checked "Remember me".
+			            if (remember) {
+			            	ManagementUtility.storeUserCookie(response, user);
+			            }
+			            // Else delete cookie.
+			            else {
+			            	ManagementUtility.deleteUserCookie(response);
+			            }
+			 
+			            // Redirect to userInfo page.
+			            response.sendRedirect(request.getContextPath() + "/Dashboard");
+			        	
+			        	
+			        	
+			        } else{
+			        	
+			        	errorString = "This email address has already been used.";
+			        	
+			            request.setAttribute("errorString", errorString);
+			            
+			            request.getRequestDispatcher("/").forward(request, response);
+	 
+
+			        	
+			        }
+			 	  
 		}catch(Exception e ){e.printStackTrace();}  
 	   }
 	  }
