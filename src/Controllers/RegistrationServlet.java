@@ -81,8 +81,7 @@ public class RegistrationServlet extends HttpServlet {
 					    System.out.println("successfuly inserted");
 					    
 					    
-					
-
+				
 					   
 				       User user = new User();
 				   
