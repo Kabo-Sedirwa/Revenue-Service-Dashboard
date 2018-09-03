@@ -55,7 +55,7 @@ public class RegistrationServlet extends HttpServlet {
 			  try {
 		            Connection conn = ManagementUtility.getStoredConnection(request);
 		            
-		            
+		            //Query to check if the email address has already been used . Email address column in db was made Unique.
 		            String checkEmailQuery = "Select Count(*) AS countRow from users " //
 			                + " where email = '"+email+"'";
 			 
@@ -65,6 +65,7 @@ public class RegistrationServlet extends HttpServlet {
 			        rs.next();
 			        String rowCount = rs.getString(1);
 			        
+			        //if there are no email addresses matching user input , then create the new account and redirect them to the dashboard
 			        if(rowCount.equals(0)){
 			        	
 			            String sql = "Insert into users(firstName,lastName,email,password) values (?,?,?,?)";
@@ -80,8 +81,6 @@ public class RegistrationServlet extends HttpServlet {
 					    pstmRegister.executeUpdate();
 					    System.out.println("successfuly inserted");
 					    
-					    
-				
 					   
 				       User user = new User();
 				   
@@ -102,7 +101,6 @@ public class RegistrationServlet extends HttpServlet {
 			 
 			            // Redirect to userInfo page.
 			            response.sendRedirect(request.getContextPath() + "/Dashboard");
-			        	
 			        	
 			        	
 			        } else{
