@@ -38,7 +38,7 @@
   <div id="Login" class="w3-container form w3-padding-16">
     <form action = "${pageContext.request.contextPath}/Login"  class="w3-container" method="post">
       <label class="w3-text-white w3-left"><b>Email</b></label>
-      <input name ="email"class="w3-input w3-border w3-light-grey" type="text" required>
+      <input name ="email"class="w3-input w3-border w3-light-grey" type="email" required>
       <br>
 
       <label class="w3-text-white w3-left"><b>Password</b></label>
