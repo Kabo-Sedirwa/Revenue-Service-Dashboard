@@ -82,14 +82,14 @@ public class CompanyTaxServlet extends HttpServlet {
 	        // Store infomation to request attribute, before forward to views.
 	        request.setAttribute("errorString", errorString);
 	 
-	        // If error, forward to Edit page.
+	        // If error, forward to Dashboard page.
 	        if (errorString != null) {
 	            RequestDispatcher dispatcher = request.getServletContext()
 	                    .getRequestDispatcher("/Dashboard");
 	            dispatcher.forward(request, response);
 	        }
 	        // If everything nice.
-	        // Redirect to the product listing page.
+	        // Redirect to the Dashboard page.
 	        else {
 	            response.sendRedirect(request.getContextPath() + "/Dashboard");
 	        }

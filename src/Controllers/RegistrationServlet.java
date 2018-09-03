@@ -38,8 +38,7 @@ public class RegistrationServlet extends HttpServlet {
 		  String lastName = request.getParameter("lastName");
 		  String email = request.getParameter("email");
 		  String password = request.getParameter("password");
-	      String rememberMeStr = request.getParameter("rememberMe");
-	      boolean remember = "Y".equals(rememberMeStr);
+	    
 		
 
 		  // validate given input
@@ -69,8 +68,7 @@ public class RegistrationServlet extends HttpServlet {
 			        if(rowCount.equals(0)){
 			        	
 			            String sql = "Insert into users(firstName,lastName,email,password) values (?,?,?,?)";
-
-
+			            
 					    PreparedStatement pstmRegister = conn.prepareStatement(sql);
 					    
 					    pstmRegister.setString(1, firstName);
@@ -82,26 +80,16 @@ public class RegistrationServlet extends HttpServlet {
 					    System.out.println("successfuly inserted");
 					    
 					   
-				       User user = new User();
+				        User user = new User();
 				   
-				       user.setFirstName(firstName);
-				       user.setLastName(lastName);
+				        user.setFirstName(firstName);
+				        user.setLastName(lastName);
 					   
-					   HttpSession session = request.getSession();
-					   ManagementUtility.storeRegisteredUser(session, user);
+					    HttpSession session = request.getSession();
+					    ManagementUtility.storeRegisteredUser(session, user);
 			 
-			            // If user checked "Remember me".
-			            if (remember) {
-			            	ManagementUtility.storeUserCookie(response, user);
-			            }
-			            // Else delete cookie.
-			            else {
-			            	ManagementUtility.deleteUserCookie(response);
-			            }
-			 
-			            // Redirect to userInfo page.
-			            response.sendRedirect(request.getContextPath() + "/Dashboard");
-			        	
+			            // Redirect to Dashboard route on completion.
+			            response.sendRedirect(request.getContextPath() + "/Dashboard");	
 			        	
 			        } else{
 			        	

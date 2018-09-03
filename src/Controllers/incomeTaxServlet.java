@@ -73,7 +73,7 @@ public class incomeTaxServlet extends HttpServlet {
 	        String errorString = null;
 	 
 	   
-	 
+	        //No errors , then the information can be inserted into the database.
 	        if (errorString == null) {
 	            try {
 	                DbInteractionUtility.insertIncomeTaxMember(conn, taxPayer);

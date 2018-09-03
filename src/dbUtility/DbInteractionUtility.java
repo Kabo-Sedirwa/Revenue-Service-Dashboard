@@ -59,11 +59,7 @@ public class DbInteractionUtility {
 	        }
 	        return null;
 	    }
-	 
-	 
-	    
-	   
-	 
+	
 	 
 	    public static List<CompanyTax> getAllCompanyTaxRecords(Connection conn) throws SQLException {
 	        String sql = "Select * from companyTax";
@@ -173,34 +169,6 @@ public class DbInteractionUtility {
 	        return incomeTaxList;
 	    }
 	 
-	    /*
-	  public static Product findProduct(Connection conn, String code) throws SQLException {
-	        String sql = "Select a.Code, a.Name, a.Price from Product a where a.Code=?";
-	 
-	        PreparedStatement pstm = conn.prepareStatement(sql);
-	        pstm.setString(1, code);
-	 
-	        ResultSet rs = pstm.executeQuery();
-	 
-	        while (rs.next()) {
-	            String name = rs.getString("Name");
-	            float price = rs.getFloat("Price");
-	            TaxPayer product = new TaxPayer(code, name, price);
-	            return product;
-	        }
-	        return null;
-	    }
-	 
-	    public static void updateProduct(Connection conn, TaxPayer taxPayer) throws SQLException {
-	        String sql = "Update Product set Name =?, Price=? where Code=? ";
-	 
-	        PreparedStatement pstm = conn.prepareStatement(sql);
-	 
-	        pstm.setString(1, product.getName());
-	        pstm.setFloat(2, product.getPrice());
-	        pstm.setString(3, product.getCode());
-	        pstm.executeUpdate();
-	    }*/
 	 
 	    public static void insertIncomeTaxMember(Connection conn, TaxPayer taxPayer) throws SQLException {
 	        String sql = "Insert into incomeTax(firstName,lastName,postalAddress,residentialAddress,industry,DOB,salary,timestamp) values (?,?,?,?,?,?,?,now())";
@@ -234,15 +202,4 @@ public class DbInteractionUtility {
 	 
 	        pstm.executeUpdate();
 	    }
-	 
-	    public static void deleteProduct(Connection conn, String code) throws SQLException {
-	        String sql = "Delete From Product where Code= ?";
-	 
-	        PreparedStatement pstm = conn.prepareStatement(sql);
-	 
-	        pstm.setString(1, code);
-	 
-	        pstm.executeUpdate();
-	    }
-
 }

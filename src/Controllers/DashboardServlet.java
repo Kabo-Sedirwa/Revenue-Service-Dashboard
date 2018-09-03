@@ -93,7 +93,7 @@ public class DashboardServlet extends HttpServlet{
 
 	 
 	        // If the user has logged in, then forward to the page
-	        // /WEB-INF/views/userInfoView.jsp
+	        // /WEB-INF/views/Dashboard.jsp
 	        RequestDispatcher dispatcher //
 	                = this.getServletContext().getRequestDispatcher("/WEB-INF/views/Dashboard Pages/Dashboard.jsp");
 	        dispatcher.forward(request, response);

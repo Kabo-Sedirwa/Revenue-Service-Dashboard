@@ -34,8 +34,7 @@ public class LoginServlet extends HttpServlet {
 			
 			    String email = request.getParameter("email");
 		        String password = request.getParameter("password");
-		        String rememberMeStr = request.getParameter("rememberMe");
-		        boolean remember = "Y".equals(rememberMeStr);
+		 
 		 
 		        User user = null;
 		        boolean hasError = false;
@@ -60,7 +59,7 @@ public class LoginServlet extends HttpServlet {
 		                errorString = e.getMessage();
 		            }
 		        }
-		        // If error, forward to /WEB-INF/views/login.jsp
+		        // If error, forward to /WEB-INF/views/home.jsp
 		        if (hasError) {
 		            user = new User();
 		            user.setEmail(email);
@@ -70,7 +69,7 @@ public class LoginServlet extends HttpServlet {
 		            request.setAttribute("errorString", errorString);
 		            request.setAttribute("user", user);
 		 
-		            // Forward to /WEB-INF/views/login.jsp
+		            // Forward to /WEB-INF/views/home.jsp
 		            RequestDispatcher dispatcher //
 		                    = this.getServletContext().getRequestDispatcher("/home");
 		 
@@ -78,21 +77,14 @@ public class LoginServlet extends HttpServlet {
 		        }
 		        // If no error
 		        // Store user information in Session
-		        // And redirect to userInfo page.
+		        // And redirect to Dashboard.
 		        else {
 		            HttpSession session = request.getSession();
 		            ManagementUtility.storeLoginedUser(session, user);
 		 
-		            // If user checked "Remember me".
-		            if (remember) {
-		            	ManagementUtility.storeUserCookie(response, user);
-		            }
-		            // Else delete cookie.
-		            else {
-		            	ManagementUtility.deleteUserCookie(response);
-		            }
+		     
 		 
-		            // Redirect to userInfo page.
+		            // Redirect to Dashboard route.
 		            response.sendRedirect(request.getContextPath() + "/Dashboard");
 		        }
 		    }
