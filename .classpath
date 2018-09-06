@@ -14,5 +14,6 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="/usr/local/JUNIT/junit-4.10.jar"/>
+	<classpathentry kind="lib" path="/home/shaq/Downloads/selenide-4.14.0.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>
