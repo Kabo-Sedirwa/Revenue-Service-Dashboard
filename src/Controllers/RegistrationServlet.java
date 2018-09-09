@@ -65,7 +65,7 @@ public class RegistrationServlet extends HttpServlet {
 			        String rowCount = rs.getString(1);
 			        
 			        //if there are no email addresses matching user input , then create the new account and redirect them to the dashboard
-			        if(rowCount.equals(0)){
+			        if(rowCount.equals("0")){
 			        	
 			            String sql = "Insert into users(firstName,lastName,email,password) values (?,?,?,?)";
 			            
